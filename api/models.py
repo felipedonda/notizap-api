@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
     
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    display_name = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=15)
     timezone = models.CharField(max_length=50)
 
@@ -34,4 +35,4 @@ class Reminder(models.Model):
         type_str = "Reminder" if not self.is_task else "Task"
         done_str = " (done)" if self.done else " (pending)"
         done_str = done_str if self.is_task else ""
-        return f"{type_str}: {self.title}{recurring_str} - {self.scheduled_time}{done_str} for {self.user.username} at {phone_number}."
+        return f"{type_str}: {self.title}{recurring_str} - {self.scheduled_time}{done_str} for {self.user.email} at {phone_number}."
